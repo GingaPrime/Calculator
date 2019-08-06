@@ -1,9 +1,3 @@
-
-
-
-
-
-
 var PRIME_CERTATNTY = 100;	// 素数計算の確度(100-100/4^n)%の確率で素数
 
 /**
@@ -18,8 +12,13 @@ function getResultGINGA(radix,lyrics){
 	minPrime = getMinPrime(radix,lyrics);
 	// 素数が存在しない場合結果を出力して終了
 	if(bigInt(minPrime).equals(bigInt.zero)){
-		document.write("radix:	<B>" + radix + "</B>	result:	<B>false</B><BR>")
-		document.write("基数" + radix + "の場合素数が存在しない<BR>")
+		document.write("<tr><th>")
+		document.write(radix)
+		document.write("</th>")
+		document.write("<td class=\"txt\" colspan=\"3\">")
+		document.write("※基数" + radix + "の場合素数は存在しません")
+		document.write("</td></tr>")
+
 		return
 	}
 
@@ -43,9 +42,22 @@ function getResultGINGA(radix,lyrics){
 		check = true;
 	}
 
-	document.write("radix:	<B>" + radix + "</B>	result:	<B>"+check+"</B><BR>")
+	document.write("<tr><th>" + radix + "</th>")
+	document.write("<td class=\"txt\">")
 	document.write(minPrimeStr+"<BR>")
 	document.write(maxPrimeStr+"<BR>")
+	document.write(bigInt(minPrime).add(maxPrime).toString(radix))
+	document.write("</td>")
+	if(!check)document.write("<td class=\"bold\">")
+	if(check)document.write("<td class=\"bold2\">")
+	document.write(check)
+	document.write("</td>")
+	document.write("<td class=\"txt\">")
+	document.write(bigInt(minPrime).toString(10)+"<BR>")
+	document.write(bigInt(maxPrime).toString(10))
+	document.write("</td>")
+	document.write("</tr>")
+	
 	return check;
 }
 /**
@@ -218,32 +230,7 @@ function getMultiplyNum(radix,lyrics,elements){
 	}
 	return Bi;
 }
-/**
- * 対象の歌詞と基数を用いる場合、歌詞を構成する各要素（ギンガマンの場合はABCD）にかける冪の集合を取得する
- * @param radix :基数とする値
- * @param lyrics[] :歌詞コード(圧縮版)
- */
-function setElementPowers(radix,lyrics){
-	var length=0;
-	for (length = 0;length<lyrics.length;length++){
-		if(lyrics[length]==0)break;
-	}
-	var powers = [];
 
-	var sameLengthLyrics = [];
-	sameLengthLyrics=changeToSameLengthLyrics(lyrics);
-
-	// 歌詞コードに沿ってn進数の銀河数変換用値を定める
-	for(var i=0;i<powers.length;i++){
-		powers[i]=bigInt.ZERO;
-		for(var j=0;j<sameLengthLyrics.length;j++){
-			if((1&sameLengthLyrics[i]>>j)==1){
-				powers[i]=powers[i].add(bigInt(radix).pow(j));
-			}
-		}
-	}
-	return powers;
-}
 
 /** 文字列置換用 */
 function replaceAll( strBuffer , strBefore , strAfter ){
@@ -298,43 +285,40 @@ function isCompositeLyric(lyrics) {
 	return true;
 }
 
-/**
- * 圧縮された歌詞コーﾄﾞを全て同じ長さに展開する(例)
- * A 101000000100→101000000100
- * B    110010101→010100101001
- * C         1110→000011010000
- * D            1→000000000010
- */
-function changeToSameLengthLyrics(lyrics){
-	var returnint = [];
-	var buf = [];
 
-	for (var i=0;i<lyrics.length;i++){
-		returnint[i]=0;
-		buf[i]=lyrics[i];
-	}
-	returnint[0]=buf[0];
-	var used=buf[0];
 
-	for (var i=1;i<buf.length;i++){
-		if(buf[i]==0)break;
-		for (var n=0;n<buf.length;n++){
-			if((1&(used>>n))==1){
-				buf[i]<<=1;
-			}else if((1&(buf[i]>>n))==1){
-				returnint[i]=returnint[i]|(1<<n);
-			}
-		}
-		used=used|returnint[i];
-	}
-	return returnint;
+function tableheader(){
+	document.write("<table>")
+	document.write("		<thead>")
+	document.write("			<tr>")
+	document.write("				<td>基数</td>")
+	document.write("				<th scope='col'>最小素数<BR>最大素数<BR>和</th>")
+	document.write("				<th scope='col'>銀河判定</th>")
+	document.write("				<th scope='col'>最小素数<BR>最大素数<BR>(10進数表示)</th>")
+	document.write("			</tr>")
+	document.write("		</thead>")
+	document.write("		<tbody>")
 }
-/**最大公約数
- * @param a
- * @param b
- * @return
- */
-function gcd (a,b) {
-	return b>0?gcd(b,a%b):a;
+function tablefooter(){
+	document.write("</tbody></table>")
+}
+
+function calculator(text){
+		document.write("<h2><center>")
+	document.write(text)
+	document.write("</center></h1>")
+	var lyrics = convertStringToLyrics(text)
+
+	if(isCompositeLyric(lyrics)){
+		document.write("<BR><center>")
+		document.write("必ず合成数になる歌詞パターンです")
+		document.write("</center><BR>")
+	}else{
+		tableheader();
+		for(var i = lyrics.length;i<=16;i++){
+			getResultGINGA(i,lyrics);
+		}
+		tablefooter();
+	}
 }
 
