@@ -1,0 +1,16 @@
+.site-header{position: fixed;display: flex;top: 0;left: 0;padding: 5px;height:30px;width: 100%;background: #11A64D; color:white;font-size: 28px;white-space: nowrap;text-transform: uppercase;}
+body {line-height: 1.25;
+font-family: MeiryoKe_Gothic, "Ricty Diminished", "Courier New", Courier, Monaco, Menlo, Consolas, "Lucida Console", "OsakaÅ|ìôïù", "Osaka-ìôïù", Osaka-mono, "ÇlÇr ÉSÉVÉbÉN", "MS Gothic", monospace;}
+table {  border-collapse: collapse;  margin: 0 auto;  padding: 0;  width: 350px; box-shadow: 0 0 15px -6px #00000073;}
+table tr {  background-color: #fff;}
+table tbody tr:hover{  background-color: #fffae9;}
+table th,
+table td {  padding: .35em 1em;  border-bottom: 1px solid #eee;}
+table thead td {white-space: nowrap;}
+table thead th {white-space: nowrap;    font-size: .85em;    padding: 1em;}
+table thead tr{  background-color: #22598E;  color:#fff;}
+table tbody th {  text-align: right;  font-size: .8em;}
+.txt{   text-align: right;   font-size: .75em;text-transform: uppercase;}
+.bold{  text-align: right;  color: #000;  font-weight: bold;text-transform: uppercase;}
+.bold2{  text-align: right;  color: #f00;  font-weight: bold;text-transform: uppercase;}
+@media screen and (max-width: 600px) {  table{width: 100%;}}
