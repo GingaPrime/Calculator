@@ -3,23 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"content="width=320,height=480,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0,user-scalable=yes" />
 <title>GingaPrimeCalculator</title>
-<Style>
-.site-header{position: fixed;display: flex;top: 0;left: 0;padding: 5px;height:30px;width: 100%;background: #11A64D; color:white;font-size: 28px;white-space: nowrap;text-transform: uppercase;}
-body {line-height: 1.25;
-font-family: MeiryoKe_Gothic, "Ricty Diminished", "Courier New", Courier, Monaco, Menlo, Consolas, "Lucida Console", "Osaka－等幅", "Osaka-等幅", Osaka-mono, "ＭＳ ゴシック", "MS Gothic", monospace;}
-table {  border-collapse: collapse;  margin: 0 auto;  padding: 0;  width: 350px; box-shadow: 0 0 15px -6px #00000073;}
-table tr {  background-color: #fff;}
-table tbody tr:hover{  background-color: #fffae9;}
-table th,
-table td {  padding: .35em 1em;  border-bottom: 1px solid #eee;}
-table thead td {white-space: nowrap;}
-table thead th {white-space: nowrap;    font-size: .85em;    padding: 1em;}
-table thead tr{  background-color: #22598E;  color:#fff;}
-table tbody th {  text-align: right;  font-size: .8em;}
-.txt{   text-align: right;   font-size: .75em;text-transform: uppercase;}
-.bold{  text-align: right;  color: #000;  font-weight: bold;text-transform: uppercase;}
-@media screen and (max-width: 600px) {  table{width: 100%;}}
-</Style>
+<link rel="stylesheet" type="text/css" href="style.css">
 <script src="https://peterolson.github.io/BigInteger.js/BigInteger.min.js"></script>
 <script src="GalaxyPrime.js"></script>
 <script>
@@ -27,41 +11,15 @@ table tbody th {  text-align: right;  font-size: .8em;}
 	text = text.replace(text[0],'')
 	text = text.replace("lyric=",'')
 	if(text.length==0)text = "ガンガンギギンギンガマン"
-
-	document.write(text)
-	document.write("<BR>")
-	var lyrics = convertStringToLyrics(text)
-
-	if(isCompositeLyric(lyrics)){
-		document.write("合成数<BR>")
-	}else{
-		for(var i = lyrics.length;i<=16;i++){
-			getResultGINGA(i,lyrics);
-		}
-	}
+	calculator(text);
 </script>
-<script type="text/javascript">
-function search(){
-var lyric = document.getElementById('stxt').value
-window.location.href = "https://192.168.11.5/web/gingaman/?" + lyric ;
-}\r\n$( '#stxt' ).keypress( function ( e ) {
-  if ( e.which == 13 ) {
-  // ここに処理を書く
-
-// スマホのキーボードを閉じる
-  $("#stxt").blur();
-   return false;
-}
-})</script>
-
-
 </head>
 <body>
-<table><thead><tr><td><form action="#"><input id="stxt" name="lyric" type="text" placeholder="歌詞を入力" />
-<input id="sbtn" type="submit" value="検索" onclick="search();"></form>
-</td></tr></thead></table>
-
-
-
+<BR>
+<BR>
+<table><thead><tr><td><center>
+<form action="#"><input id="stxt" name="lyric" type="text" placeholder="歌詞を入力" />
+<input id="sbtn" type="submit" value="計算"></form>
+</center></td></tr></thead></table>
 </body>
 </html>
