@@ -303,12 +303,12 @@ function tablefooter(){
 	document.write("</tbody></table>")
 }
 
-function calculator(texts){
+function calculator(parameter){
 	var lyric = "ガンガンギギンギンガマン"
 	var min = 2
 	var max = 16
 
-	var text = decodeURIComponent(location.search)
+	var text = decodeURIComponent(parameter)
 	text = text.replace(text[0],'')
 	var texts = text.split('&');
 	texts[0] = texts[0].replace("lyric=",'')
