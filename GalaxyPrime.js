@@ -303,19 +303,40 @@ function tablefooter(){
 	document.write("</tbody></table>")
 }
 
-function calculator(text){
-		document.write("<h2><center>")
-	document.write(text)
+function calculator(texts){
+	var lyric = "ガンガンギギンギンガマン"
+	var min = 2
+	var max = 16
+
+	var text = decodeURIComponent(location.search)
+	text = text.replace(text[0],'')
+	var texts = text.split('&');
+	texts[0] = texts[0].replace("lyric=",'')
+	if(texts[0].length!=0)lyric = texts[0]
+	if(texts.length >=2){
+		texts[1] = texts[1].replace("min=",'')
+		if(texts[1].length!=0)min = texts[1]
+	}
+	if(texts.length >=3){
+		texts[2] = texts[2].replace("max=",'')
+		if(texts[2].length!=0)max = texts[2]
+	}
+	
+	document.write("<h2><center>")
+	document.write(lyric)
 	document.write("</center></h1>")
-	var lyrics = convertStringToLyrics(text)
+	var lyrics = convertStringToLyrics(lyric)
 
 	if(isCompositeLyric(lyrics)){
 		document.write("<BR><center>")
 		document.write("必ず合成数になる歌詞パターンです")
 		document.write("</center><BR>")
 	}else{
+		if(min<lyrics.length)min=lyrics.length
+		if(max<lyrics.length)max=lyrics.length
+		
 		tableheader();
-		for(var i = lyrics.length;i<=16;i++){
+		for(var i = min;i<=max;i++){
 			getResultGINGA(i,lyrics);
 		}
 		tablefooter();
