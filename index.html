@@ -7,22 +7,91 @@
 <script src="https://peterolson.github.io/BigInteger.js/BigInteger.min.js"></script>
 <script src="GalaxyPrime.js"></script>
 <script>
-	var text = decodeURIComponent(location.search)
-	text = text.replace(text[0],'')
-	text = text.replace("lyric=",'')
-	if(text.length==0)text = "ガンガンギギンギンガマン"
-	calculator(text);
+	calculator(location.search);
 </script>
 </head>
 <body>
 <BR>
 <BR>
-<table><thead><tr><td><center>
-<form action="#"><input id="stxt" name="lyric" type="text" placeholder="歌詞を入力" />
-<input id="sbtn" type="submit" value="計算"></form>
-</center>
+<table><thead><tr><td>
+<form action="#">
+<input id="stxt" name="lyric" type="text" placeholder="歌詞を入力"
+ style="width:100%; box-sizing:border-box"  />
+<br>
+基数 min
+<select name="min">
+<option selected>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+<option>13</option>
+<option>14</option>
+<option>15</option>
+<option>16</option>
+<option>17</option>
+<option>18</option>
+<option>19</option>
+<option>20</option>
+<option>21</option>
+<option>22</option>
+<option>23</option>
+<option>24</option>
+<option>25</option>
+<option>26</option>
+<option>27</option>
+<option>28</option>
+<option>29</option>
+<option>30</option>
+<option>31</option>
+<option>32</option>
+</select>
+max
+<select name="max">
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+<option>13</option>
+<option>14</option>
+<option>15</option>
+<option selected>16</option>
+<option>17</option>
+<option>18</option>
+<option>19</option>
+<option>20</option>
+<option>21</option>
+<option>22</option>
+<option>23</option>
+<option>24</option>
+<option>25</option>
+<option>26</option>
+<option>27</option>
+<option>28</option>
+<option>29</option>
+<option>30</option>
+<option>31</option>
+<option>32</option>
+</select>
+</td><td>
+<input id="sbtn" type="submit" value="計算">
+</td>
+</form>
+</tr><tr><td  colspan="3">
 ※複雑な歌詞は計算に時間がかかります
 </td></tr></thead></table>
-<center></center>
 </body>
 </html>
