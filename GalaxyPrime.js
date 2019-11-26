@@ -7,9 +7,12 @@ var PRIME_CERTATNTY = 100;	// 素数計算の確度(100-100/4^n)%の確率で素
  * @return 計算結果
  */
 function getResultGINGA(radix,lyrics){
-	// 最小素数を取得
-	var minPrime =bigInt.zero;
-	minPrime = getMinPrime(radix,lyrics);
+	var minPrime = bigInt.zero;
+	// 必ず合成数となる歌詞の場合は計算を省略
+	if(!isCompositeLyric(lyrics,radix)){
+		// 最小素数を取得
+		minPrime = getMinPrime(radix,lyrics);
+	}
 	// 素数が存在しない場合結果を出力して終了
 	if(bigInt(minPrime).equals(bigInt.zero)){
 		document.write("<tr><th>")
@@ -258,29 +261,48 @@ function convertStringToLyrics(str){
 	}
 	return lyrics;
 }
-
+/**
+ * 歌詞コード配列をABC文字列に変換する(要素数16まで)
+ * @param lyrics
+ * @return str
+ */
+function convertLyricsToABC(lyrics){
+	if (lyrics.length>16)return "";
+	var str = "ABCDEFGHIJKLMNOP";
+	var bf = "";
+	for(var n=0;n<lyrics[0].length;n++){
+		for(var i=0;i<lyrics.length;i++){
+			if(lyrics[i][n]==1){
+				bf=bf+str.slice(i,i+1);
+				break;
+			}
+		}
+	}
+	return "("+bf+")";
+}
 
 /**
  * 対象の歌詞が必ず合成数になるか
  * @param lyrics
+ * @param radix
  * @return true:必ず合成数	false:素数を持ち得る
  */
-function isCompositeLyric(lyrics) {
+function isCompositeLyric(lyrics,radix) {
 	if(lyrics.length==1){
-		if(bigInt.fromArray(lyrics[0],2).equals(bigInt.one)
-			||bigInt.fromArray(lyrics[0],2).isProbablePrime(PRIME_CERTATNTY)){
+		if(bigInt.fromArray(lyrics[0],radix).equals(bigInt.one)
+			||bigInt.fromArray(lyrics[0],radix).isProbablePrime(PRIME_CERTATNTY)){
 			return false;
 		}
 		return true;
 	}
 	var bf = [];
 	for(var i = 0;i<lyrics.length;i++) {
-		bf[i] = bigInt.fromArray(lyrics[i],2);
+		bf[i] = bigInt.fromArray(lyrics[i],radix);
 	}
 	var gcdbf = bf[0];
 	for(var i = 1;i<bf.length;i++) {
 		gcdbf = bigInt.gcd(bf[i],gcdbf);
-		if(gcdbf==1)return false;
+		if(gcdbf.equals(bigInt.one))return false;
 	}
 	return true;
 }
@@ -315,31 +337,26 @@ function calculator(parameter){
 	if(texts[0].length!=0)lyric = texts[0]
 	if(texts.length >=2){
 		texts[1] = texts[1].replace("min=",'')
-		if(texts[1].length!=0)min = texts[1]
+		if(texts[1].length!=0)min = parseInt(texts[1],10)
 	}
 	if(texts.length >=3){
 		texts[2] = texts[2].replace("max=",'')
-		if(texts[2].length!=0)max = texts[2]
+		if(texts[2].length!=0)max = parseInt(texts[2],10)
 	}
 	
 	document.write("<h2><center>")
 	document.write(lyric)
-	document.write("</center></h1>")
+	document.write("</center></h2>")
 	var lyrics = convertStringToLyrics(lyric)
+	document.write("<h3><center>")
+	document.write(convertLyricsToABC(lyrics))
+	document.write("</center></h3>")
 
-	if(isCompositeLyric(lyrics)){
-		document.write("<BR><center>")
-		document.write("必ず合成数になる歌詞パターンです")
-		document.write("</center><BR>")
-	}else{
-		if(min<lyrics.length)min=lyrics.length
-		if(max<lyrics.length)max=lyrics.length
-		
-		tableheader();
-		for(var i = min;i<=max;i++){
-			getResultGINGA(i,lyrics);
-		}
-		tablefooter();
+	if(min<lyrics.length)min=lyrics.length;
+	if(max<lyrics.length)max=lyrics.length;
+	tableheader();
+	for(var i = min;i <= max;i++) {
+		getResultGINGA(i,lyrics);
 	}
+	tablefooter();
 }
-
